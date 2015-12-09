@@ -38,7 +38,7 @@ class Cron_SMS_SIA {
             die( 'Ndeq ne bau konek kadu user : ' . self::_user );
 
         if( !$this->db_select = mysql_select_db( self::_db, $this->db_conn ) )
-            die( 'Ndeq ne bau konek jok DB : ' . self::_db . mysql_error() );
+            die( 'Ndeq ne bau konek jok DB : ' . self::_db );
 
     }
 

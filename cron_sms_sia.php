@@ -55,7 +55,7 @@ class Cron_SMS_SIA {
 
     function inject( $SMS_item ) {
 
-        $outbox_id = mysql_query(
+        $outbox_status = mysql_query(
             'INSERT INTO `' . self::_table_outbox . '`'
             . ' (`DestinationNumber`, `TextDecoded`, `CreatorID`, `SenderID`)'
             . ' VALUES ("'
@@ -65,11 +65,11 @@ class Cron_SMS_SIA {
             . $SMS_item[ 'phoneid' ] . '")'
         );
 
-        $user_outbox_id = mysql_query(
-            'INSERT INTO `' . self::_table_user_outbox . '` (`id_outbox`, `id_user`) VALUES (' . $outbox_id . ', 1)'
+        $user_outbox_status = !$outbox_status ? false : mysql_query(
+            'INSERT INTO `' . self::_table_user_outbox . '` (`id_outbox`, `id_user`) VALUES (' . mysql_insert_id() . ', 1)'
         );
 
-        return $outbox_id && $user_outbox_id;
+        return $outbox_status && $user_outbox_status;
     }
 
     function push( $ids ) {
